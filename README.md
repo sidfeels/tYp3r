@@ -22,4 +22,4 @@ tYp3r helps bypass content filters by adding minor alterations to text while pre
 2. Install requirements: `pip install -r requirements.txt`
 3. Run: `streamlit run app.py`
 
-### Have fun breaking the llms!
+### Have fun breaking llms!
