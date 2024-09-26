@@ -122,10 +122,11 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("### Input Text")
     text_input = st.text_area("Enter your text here:", height=200, key="input")
+    convert_button = st.button("🔄 Convert")
 
 with col2:
     st.markdown("### Transformed Text")
-    if text_input:
+    if text_input and convert_button:
         transformed_text = subtle_text_transformer(text_input)
         st.text_area("Result:", transformed_text, height=200, key="output")
 
@@ -133,11 +134,13 @@ with col2:
             pyperclip.copy(transformed_text)
             st.success("Copied to clipboard!")
 
+
+        if 'history' not in st.session_state:
+            st.session_state.history = []
+        st.session_state.history.append((text_input, transformed_text))
+
 if 'history' not in st.session_state:
     st.session_state.history = []
-
-if text_input and transformed_text:
-    st.session_state.history.append((text_input, transformed_text))
 
 if st.session_state.history:
     st.markdown("### Recent Transformations")
@@ -145,6 +148,7 @@ if st.session_state.history:
         with st.expander(f"Transformation {len(st.session_state.history) - i}"):
             st.markdown(f"**Original:** {original[:50]}..." if len(original) > 50 else f"**Original:** {original}")
             st.markdown(f"**Transformed:** {transformed[:50]}..." if len(transformed) > 50 else f"**Transformed:** {transformed}")
+
 
 st.markdown("""
 ---
