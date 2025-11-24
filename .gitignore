@@ -1,0 +1,25 @@
+# macOS cruft
+.DS_Store
+
+# Python
+backend/.venv/
+**/__pycache__/
+**/*.pyc
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/.turbo/
+frontend/.swc/
+frontend/.eslintcache
+
+# Environment files
+*.env
+*.env.*
+
+# Repo-specific files we keep local
+plan_rough.md
+legacy/
+.factory
+plan.md
+implementation.md
