@@ -115,11 +115,23 @@ export function PreviewPanel() {
   const copyToClipboard = async () => {
     if (!effectiveOutput) return;
     try {
-      await navigator.clipboard.writeText(effectiveOutput);
+      if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(effectiveOutput);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = effectiveOutput;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
       addHistoryEntry(inputText, effectiveOutput, blocks);
-      toast.success('Copied to clipboard!');
+      toast.success("Copied to clipboard!");
     } catch (err) {
-      const errMsg = err instanceof Error ? err.message : 'Failed to copy';
+      const errMsg = err instanceof Error ? err.message : "Failed to copy";
       toast.error(errMsg);
     }
   };
